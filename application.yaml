@@ -11,6 +11,7 @@ spec:
   source:
     repoURL: https://github.com/Hejle/traefik-argocd.git
     targetRevision: master
+    path: .
   syncPolicy:
     automated:
       prune: true
