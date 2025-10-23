@@ -9,9 +9,8 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kube-system
   source:
-    repoURL: https://github.com/your-org/your-repo.git
+    repoURL: https://github.com/Hejle/traefik-argocd.git
     targetRevision: master
-    path: infra/traefik-overrides
   syncPolicy:
     automated:
       prune: true
