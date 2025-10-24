@@ -6,11 +6,13 @@ metadata:
 spec:
   valuesContent: |-
     additionalArguments:
+      - "--entrypoints.web.address=:8000"
+      - "--entrypoints.websecure.address=:8443"
       - "--certificatesresolvers.default.acme.email=joachim-dk@hotmail.com"
       - "--certificatesresolvers.default.acme.storage=/data/acme.json"
       - "--certificatesresolvers.default.acme.httpchallenge.entrypoint=web"
     ports:
       web:
-        exposedPort: 80
+        exposedPort: 8000
       websecure:
-        exposedPort: 443
+        exposedPort: 8443

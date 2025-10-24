@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik-log-dashboard
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik-log-dashboard
+  template:
+    metadata:
+      labels:
+        app: traefik-log-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: {{ .Values.dashboard.image }}
+        ports:
+          - containerPort: {{ .Values.dashboard.port }}
+        env:
+          - name: AGENT_API_URL
+            value: "http://traefik-log-dashboard-agent.{{ .Values.namespace }}.svc.cluster.local:5000"
+          - name: AGENT_API_TOKEN
+            value: "{{ .Values.dashboard.authToken }}"
+          - name: NODE_ENV
+            value: "production"
+          - name: PORT
+            value: "{{ .Values.dashboard.port | quote }}"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.dashboard.port }}
+          initialDelaySeconds: 30
+          periodSeconds: 30
