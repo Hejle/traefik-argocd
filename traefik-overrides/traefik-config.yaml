@@ -4,6 +4,15 @@ metadata:
   name: traefik
   namespace: kube-system
 spec:
+  additionalVolumes:
+    - name: traefik-logs
+      persistentVolumeClaim:
+        claimName: traefik-logs
+
+  additionalVolumeMounts:
+    - name: traefik-logs
+      mountPath: /logs
+      readOnly: false
   valuesContent: |-
     additionalArguments:
       - "--entrypoints.web.address=:8000"
@@ -19,13 +28,3 @@ spec:
         exposedPort: 8000
       websecure:
         exposedPort: 8443
-
-  additionalVolumes:
-    - name: traefik-logs
-      persistentVolumeClaim:
-        claimName: traefik-logs
-
-  additionalVolumeMounts:
-    - name: traefik-logs
-      mountPath: /logs
-      readOnly: false
