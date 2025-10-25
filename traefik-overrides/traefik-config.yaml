@@ -20,12 +20,13 @@ spec:
       websecure:
         exposedPort: 8443
     
-    additionalVolumes:
-      - name: traefik-logs
-        persistentVolumeClaim:
-          claimName: traefik-logs
+    deployment:
+      additionalVolumes:
+        - name: traefik-logs
+          persistentVolumeClaim:
+            claimName: traefik-logs
 
-    additionalVolumeMounts:
-      - name: traefik-logs
-        mountPath: /logs
-        readOnly: false
+      additionalVolumeMounts:
+        - name: traefik-logs
+          mountPath: /logs
+          readOnly: false
