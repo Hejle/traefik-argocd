@@ -5,6 +5,7 @@ namespace: traefik-dashboard
 
 resources:
   - namespace.yaml
+  - pv.yaml
   - pvc.yaml
   - deployment-agent.yaml
   - service-agent.yaml
