@@ -11,8 +11,21 @@ spec:
       - "--certificatesresolvers.default.acme.email=joachim-dk@hotmail.com"
       - "--certificatesresolvers.default.acme.storage=/data/acme.json"
       - "--certificatesresolvers.default.acme.httpchallenge.entrypoint=web"
+      - "--accesslog=true"
+      - "--accesslog.format=json"
+      - "--accesslog.filepath=/logs/access.log"
     ports:
       web:
         exposedPort: 8000
       websecure:
         exposedPort: 8443
+
+  additionalVolumes:
+    - name: traefik-logs
+      persistentVolumeClaim:
+        claimName: traefik-logs
+
+  additionalVolumeMounts:
+    - name: traefik-logs
+      mountPath: /logs
+      readOnly: false
