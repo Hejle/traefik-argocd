@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: agent
-          image: hhftechnology/traefik-log-dashboard-agent:dev-dashboard
+          image: hhftechnology/traefik-log-dashboard-agent:latest
           imagePullPolicy: IfNotPresent
           resources:
             requests:

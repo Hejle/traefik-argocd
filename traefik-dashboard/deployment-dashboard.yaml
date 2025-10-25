@@ -16,7 +16,7 @@ spec:
         fsGroup: 1001
       containers:
         - name: dashboard
-          image: hhftechnology/traefik-log-dashboard:dev-dashboard
+          image: hhftechnology/traefik-log-dashboard:latest
           imagePullPolicy: IfNotPresent
           resources:
             requests:
