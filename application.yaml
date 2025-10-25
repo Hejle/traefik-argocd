@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/Hejle/traefik-argocd.git
     targetRevision: master
-    path: trafik-overrides
+    path: traefik-overrides
   syncPolicy:
     automated:
       prune: true
