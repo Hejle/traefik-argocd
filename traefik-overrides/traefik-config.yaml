@@ -26,7 +26,7 @@ spec:
           persistentVolumeClaim:
             claimName: traefik-logs
 
-      additionalVolumeMounts:
-        - name: traefik-logs
-          mountPath: /logs
-          readOnly: false
+  additionalVolumeMounts:
+    - name: traefik-logs
+      mountPath: /logs
+      readOnly: false
