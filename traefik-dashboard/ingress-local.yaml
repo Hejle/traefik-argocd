@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-dashboard-local-ingress
+  namespace: traefik-dashboard
+spec:
+  ingressClassName: nginx-lan
+  tls:
+  - hosts:
+    - hejlepi.local
+    secretName: hejlepi-local-tls
+  rules:
+  - host: hejlepi.local
+    http:
+      paths:
+      - path: /traefik-dashboard
+        pathType: Prefix
+        backend:
+          service:
+            name: traefik-log-dashboard
+            port:
+              number: 3000

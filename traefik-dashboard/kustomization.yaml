@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: traefik-dashboard
+
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - deployment-agent.yaml
+  - service-agent.yaml
+  - deployment-dashboard.yaml
+  - service-dashboard.yaml
+  - ingress-local.yaml
+
+secretGenerator:
+  - name: traefik-log-dashboard-token
+    literals:
+      - AGENT_API_TOKEN=d41d8cd98f00b204e9800998ecf8427e
+      - TRAEFIK_LOG_DASHBOARD_AUTH_TOKEN=d41d8cd98f00b204e9800998ecf8427e
+generatorOptions:
+  disableNameSuffixHash: true

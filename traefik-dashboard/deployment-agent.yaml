@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik-log-dashboard-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: traefik-log-dashboard-agent }
+  template:
+    metadata:
+      labels: { app: traefik-log-dashboard-agent }
+    spec:
+      containers:
+        - name: agent
+          image: hhftechnology/traefik-log-dashboard-agent:dev-dashboard
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          ports:
+            - name: http
+              containerPort: 5000
+          env:
+            # Log Paths
+            - name: TRAEFIK_LOG_DASHBOARD_ACCESS_PATH
+              value: /logs/access.log
+            - name: TRAEFIK_LOG_DASHBOARD_ERROR_PATH
+              value: /logs/access.log
+            # System Monitoring
+            - name: TRAEFIK_LOG_DASHBOARD_SYSTEM_MONITORING
+              value: "true"
+            # GeoIP
+            - name: TRAEFIK_LOG_DASHBOARD_GEOIP_ENABLED
+              value: "true"
+            - name: TRAEFIK_LOG_DASHBOARD_GEOIP_CITY_DB
+              value: /geoip/GeoLite2-City.mmdb
+            - name: TRAEFIK_LOG_DASHBOARD_GEOIP_COUNTRY_DB
+              value: /geoip/GeoLite2-Country.mmdb
+            # Log Format
+            - name: TRAEFIK_LOG_DASHBOARD_LOG_FORMAT
+              value: json
+            # Port
+            - name: PORT
+              value: "5000"
+            # Auth (from Secret)
+            - name: TRAEFIK_LOG_DASHBOARD_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: traefik-log-dashboard-token
+                  key: TRAEFIK_LOG_DASHBOARD_AUTH_TOKEN
+          volumeMounts:
+            - name: logs
+              mountPath: /logs
+            - name: geoip
+              mountPath: /geoip
+            - name: positions
+              mountPath: /data
+          readinessProbe:
+            httpGet:
+              path: /api/logs/status
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api/logs/status
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+      volumes:
+        - name: logs
+          persistentVolumeClaim:
+            claimName: traefik-logs
+        - name: geoip
+          persistentVolumeClaim:
+            claimName: traefik-geoip
+        - name: positions
+          persistentVolumeClaim:
+            claimName: traefik-agent-positions

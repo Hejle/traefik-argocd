@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/Hejle/traefik-argocd.git
     targetRevision: master
-    path: .
+    path: trafik-overrides
   syncPolicy:
     automated:
       prune: true
@@ -30,8 +30,10 @@ spec:
     path: traefik-dashboard
   destination:
     server: https://kubernetes.default.svc
-    namespace: traefik-log-dashboard
+    namespace: traefik-dashboard
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

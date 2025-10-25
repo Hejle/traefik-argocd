@@ -1,5 +1,0 @@
-apiVersion: v2
-name: traefik-log-dashboard
-version: 0.1.0
-description: Deploys the Traefik Log Dashboard and Agent
-type: application
