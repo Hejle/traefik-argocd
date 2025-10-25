@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: traefik-config
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
   destination:
@@ -22,6 +24,8 @@ kind: Application
 metadata:
   name: traefik-log-dashboard
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
