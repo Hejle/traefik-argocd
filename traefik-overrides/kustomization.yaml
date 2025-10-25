@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - traefik-config.yaml
+  - storage-class.yaml
   - pv.yaml
   - pvc.yaml
