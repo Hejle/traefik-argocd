@@ -7,13 +7,13 @@ spec:
   ingressClassName: nginx-lan
   tls:
   - hosts:
-    - hejlepi.local
+    - traefik.hejlepi.local
     secretName: hejlepi-local-tls
   rules:
-  - host: hejlepi.local
+  - host: traefik.hejlepi.local
     http:
       paths:
-      - path: /traefik-dashboard
+      - path: /
         pathType: Prefix
         backend:
           service:
