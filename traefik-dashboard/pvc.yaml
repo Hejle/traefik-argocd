@@ -10,7 +10,7 @@ spec:
     requests:
       storage: 2Gi
   storageClassName: nfs-static
-  volumeName: pv-traefik-logs
+  volumeName: pv-traefik-logs-dashboard
 
 ---
 

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-traefik-logs-dashboard
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - nfsvers=4.1
+  storageClassName: nfs-static
+  nfs:
+    server: 192.168.1.13
+    path: /srv/nfs/traefik-logs
